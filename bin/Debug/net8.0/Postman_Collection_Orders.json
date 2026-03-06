@@ -1,0 +1,343 @@
+{
+  "info": {
+    "name": "E-commerce API - Orders",
+    "description": "Complete Order API endpoints for testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Auth - Login Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+    "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+    "raw": "{\n  \"email\": \"admin@electro.com\",\n  \"password\": \"Admin@123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+        "path": ["api", "auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "2. Auth - Login Customer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+    "key": "Content-Type",
+       "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"User@123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "host": ["{{baseUrl}}"],
+  "path": ["api", "auth", "login"]
+   }
+   }
+    },
+    {
+      "name": "3. Get All Orders (Admin)",
+      "request": {
+      "method": "GET",
+        "header": [
+          {
+        "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          }
+   ],
+        "url": {
+    "raw": "{{baseUrl}}/api/orders?page=1&pageSize=10",
+  "host": ["{{baseUrl}}"],
+          "path": ["api", "orders"],
+   "query": [
+     {
+              "key": "page",
+    "value": "1"
+   },
+            {
+            "key": "pageSize",
+ "value": "10"
+ }
+          ]
+        }
+  }
+    },
+    {
+      "name": "4. Get Orders by Status (Admin)",
+    "request": {
+        "method": "GET",
+   "header": [
+   {
+    "key": "Authorization",
+     "value": "Bearer {{adminToken}}"
+     }
+        ],
+ "url": {
+          "raw": "{{baseUrl}}/api/orders?status=0",
+     "host": ["{{baseUrl}}"],
+          "path": ["api", "orders"],
+      "query": [
+         {
+         "key": "status",
+         "value": "0",
+        "description": "0=Pending, 1=Confirmed, 2=Shipping, 3=Completed, 4=Cancelled"
+      }
+       ]
+        }
+      }
+    },
+    {
+  "name": "5. Get My Orders (Customer)",
+      "request": {
+        "method": "GET",
+        "header": [
+      {
+         "key": "Authorization",
+  "value": "Bearer {{customerToken}}"
+          }
+ ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/my-orders",
+          "host": ["{{baseUrl}}"],
+      "path": ["api", "orders", "my-orders"]
+     }
+    }
+    },
+    {
+      "name": "6. Get Order by ID",
+      "request": {
+      "method": "GET",
+        "header": [
+      {
+       "key": "Authorization",
+      "value": "Bearer {{customerToken}}"
+        }
+      ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/1",
+  "host": ["{{baseUrl}}"],
+          "path": ["api", "orders", "1"]
+        }
+      }
+    },
+    {
+      "name": "7. Get Order by Code",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+       "key": "Authorization",
+        "value": "Bearer {{customerToken}}"
+          }
+        ],
+   "url": {
+  "raw": "{{baseUrl}}/api/orders/code/ORD100001",
+          "host": ["{{baseUrl}}"],
+  "path": ["api", "orders", "code", "ORD100001"]
+        }
+      }
+    },
+    {
+      "name": "8. Create Order (Customer)",
+   "request": {
+        "method": "POST",
+        "header": [
+        {
+       "key": "Authorization",
+            "value": "Bearer {{customerToken}}"
+  },
+        {
+            "key": "Content-Type",
+    "value": "application/json"
+          }
+  ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"shippingAddress\": \"123 Nguy?n Hu?, Qu?n 1, TP. H? Chí Minh\",\n  \"shippingNote\": \"G?i tr??c khi giao\",\n  \"paymentMethod\": \"COD - Thanh toán khi nh?n hàng\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 1\n    },\n    {\n      \"productId\": 5,\n      \"quantity\": 2\n    }\n  ]\n}"
+},
+        "url": {
+"raw": "{{baseUrl}}/api/orders",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "orders"]
+        }
+      }
+    },
+    {
+      "name": "9. Update Order Status - Confirm (Admin)",
+      "request": {
+        "method": "PUT",
+        "header": [
+{
+        "key": "Authorization",
+    "value": "Bearer {{adminToken}}"
+       },
+        {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+    "raw": "{\n  \"status\": 1,\n\"note\": \"??n hàng ?ã ???c xác nh?n\"\n}"
+  },
+        "url": {
+  "raw": "{{baseUrl}}/api/orders/1/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "orders", "1", "status"]
+        }
+      }
+  },
+    {
+      "name": "10. Update Order Status - Shipping (Admin)",
+      "request": {
+     "method": "PUT",
+      "header": [
+       {
+ "key": "Authorization",
+            "value": "Bearer {{adminToken}}"
+          },
+     {
+ "key": "Content-Type",
+     "value": "application/json"
+          }
+      ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": 2,\n  \"note\": \"??n hàng ?ang ???c giao\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/1/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "orders", "1", "status"]
+ }
+      }
+    },
+    {
+    "name": "11. Update Order Status - Complete (Admin)",
+      "request": {
+        "method": "PUT",
+        "header": [
+     {
+ "key": "Authorization",
+   "value": "Bearer {{adminToken}}"
+          },
+  {
+            "key": "Content-Type",
+    "value": "application/json"
+          }
+        ],
+        "body": {
+    "mode": "raw",
+        "raw": "{\n  \"status\": 3,\n  \"note\": \"?ã giao hàng thành công\"\n}"
+   },
+        "url": {
+  "raw": "{{baseUrl}}/api/orders/1/status",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "orders", "1", "status"]
+        }
+      }
+    },
+    {
+      "name": "12. Cancel Order (Customer)",
+      "request": {
+        "method": "POST",
+  "header": [
+          {
+   "key": "Authorization",
+        "value": "Bearer {{customerToken}}"
+     }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/1/cancel",
+          "host": ["{{baseUrl}}"],
+"path": ["api", "orders", "1", "cancel"]
+     }
+      }
+    },
+ {
+      "name": "13. Get Order Statistics (Admin)",
+      "request": {
+        "method": "GET",
+      "header": [
+      {
+            "key": "Authorization",
+ "value": "Bearer {{adminToken}}"
+          }
+],
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/statistics",
+        "host": ["{{baseUrl}}"],
+     "path": ["api", "orders", "statistics"]
+        }
+      }
+    },
+    {
+      "name": "14. Get Statistics with Date Range (Admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+    "value": "Bearer {{adminToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/orders/statistics?fromDate=2024-01-01&toDate=2024-12-31",
+ "host": ["{{baseUrl}}"],
+    "path": ["api", "orders", "statistics"],
+          "query": [
+   {
+          "key": "fromDate",
+         "value": "2024-01-01"
+  },
+        {
+        "key": "toDate",
+  "value": "2024-12-31"
+  }
+  ]
+        }
+      }
+  },
+    {
+      "name": "15. Get Products",
+      "request": {
+    "method": "GET",
+        "header": [],
+  "url": {
+        "raw": "{{baseUrl}}/api/products",
+       "host": ["{{baseUrl}}"],
+          "path": ["api", "products"]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+ "value": "https://localhost:7000",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+   "value": "your_admin_token_here",
+      "type": "string"
+    },
+    {
+      "key": "customerToken",
+      "value": "your_customer_token_here",
+      "type": "string"
+    }
+  ]
+}
