@@ -129,12 +129,14 @@ namespace API.Extensions
                    options.TokenValidationParameters = new TokenValidationParameters
                    {
                        ValidateIssuerSigningKey = true,
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                        ValidateIssuer = true,
-                       ValidIssuer = jwtSettings.Get<JwtSettings>()?.Issuer,
                        ValidateAudience = true,
-                       ValidAudience = jwtSettings.Get<JwtSettings>()?.Audience,
                        ValidateLifetime = true,
+
+                       ValidIssuer = jwtSettings.Get<JwtSettings>()?.Issuer,
+                       ValidAudience = jwtSettings.Get<JwtSettings>()?.Audience,
+
+                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
                        ClockSkew = TimeSpan.Zero
                    };
                });

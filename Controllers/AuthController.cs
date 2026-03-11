@@ -1,7 +1,9 @@
 using API.DTOs.Request;
 using API.Services.Interfaces;
+using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -30,7 +32,7 @@ namespace API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            if (!ModelState.IsValid)
+                if (!ModelState.IsValid)
                 return ErrorResponse("D? li?u không h?p l?", ModelState.Values
                      .SelectMany(v => v.Errors)
                 .Select(e => e.ErrorMessage)
@@ -48,11 +50,38 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// User registration
+        /// Refresh access token using refresh token
         /// </summary>
-        /// <param name="request">Registration data</param>
-        /// <returns>Authentication token and user info</returns>
-        [HttpPost("register")]
+        /// <param name="request">Token request containing access token and refresh token</param>
+        /// <returns>New access token and refresh token</returns>
+        [HttpPost("refresh")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RefreshToken([FromBody] TokenRequest request)
+        {
+            if (!ModelState.IsValid)
+                return ErrorResponse("D? li?u không h?p l?", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .ToList());
+
+            try
+            {
+                var response = await _authService.RefreshTokenAsync(request);
+                return SuccessResponse(response, "Token ?ã ???c làm m?i");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error refreshing token");
+                return ErrorResponse(ex.Message);
+            }
+        }
+
+            /// <summary>
+            /// User registration
+            /// </summary>
+            /// <param name="request">Registration data</param>
+            /// <returns>Authentication token and user info</returns>
+            [HttpPost("register")]
         [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest request)
         {

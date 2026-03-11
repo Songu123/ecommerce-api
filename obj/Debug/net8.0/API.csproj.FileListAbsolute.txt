@@ -146,3 +146,4 @@ D:\ASP_NET_CORE_MVC\E_commerce\API\obj\Debug\net8.0\refint\API.dll
 D:\ASP_NET_CORE_MVC\E_commerce\API\obj\Debug\net8.0\API.pdb
 D:\ASP_NET_CORE_MVC\E_commerce\API\obj\Debug\net8.0\API.genruntimeconfig.cache
 D:\ASP_NET_CORE_MVC\E_commerce\API\obj\Debug\net8.0\ref\API.dll
+D:\ASP_NET_CORE_MVC\E_commerce\API\obj\Debug\net8.0\API.sourcelink.json
